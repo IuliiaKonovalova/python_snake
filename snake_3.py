@@ -93,12 +93,14 @@ def main():
     # set up direction of 
     direction = curses.KEY_RIGHT
     score = 0
+    lives = 3
 
 
     # main logic
-    while key != ESC:
+    while key != ESC and lives > 0:
         # show score
         win.addnstr(0, 2, 'Score: ' + str(score) + ' ', 20)
+        win.addnstr(0, 20, 'Lives: ' + str(lives) + ' ', 20)
         # set up snake speed
         win.timeout(150 - (len(snake)) // 5 + len(snake) // 10 % 120)
         # get previous key
@@ -138,7 +140,10 @@ def main():
             elif key == curses.KEY_DOWN and prev_key == curses.KEY_UP:
                 pass
             else:
-                break
+                lives -= 1
+                # if lives == 0:
+                #     game_over(score)
+                # break
         # if snake hit the food
         if snake[0] == food:
             score += 1
@@ -151,11 +156,7 @@ def main():
         else:
             last = snake.pop()
             win.addch(last[0], last[1], ' ')
-        
-        # for coord in snake:
-        #     win.addch(coord[0], coord[1], '#')
 
-        # win.addch(food[0], food[1], '*')
         win.addch(snake[0][0], snake[0][1], '#')
 
 
