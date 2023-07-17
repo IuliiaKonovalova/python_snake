@@ -27,6 +27,8 @@ win.addch(food[0], food[1], '*')
 # define keys
 ESC = 27
 key = curses.KEY_RIGHT
+# set up direction of 
+direction = curses.KEY_RIGHT
 
 # main logic
 score = 0
@@ -60,10 +62,27 @@ while key != ESC:
     snake.insert(0, (y, x))
 
     # check if we hit the border
-    if y == 0: break
-    if y == 19: break
-    if x == 0: break
-    if x == 59: break
+    if y == 0 or y == 19 or x == 0 or x == 59:
+        # if so, update direction:
+        if y == 0:
+            y = 18
+        elif y == 19:
+            y = 1
+        elif x == 0:
+            x = 58
+        elif x == 59:
+            x = 1
+        # update direction
+        if direction == curses.KEY_DOWN:
+            direction = curses.KEY_UP
+        elif direction == curses.KEY_UP:
+            direction = curses.KEY_DOWN
+        elif direction == curses.KEY_LEFT:
+            direction = curses.KEY_RIGHT
+        elif direction == curses.KEY_RIGHT:
+            direction = curses.KEY_LEFT
+        # update position
+        snake.insert(0, (y, x))
 
     # if snake runs over itself
     if snake[0] in snake[1:]: 
