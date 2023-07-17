@@ -1,10 +1,11 @@
 import curses
 from random import randint
 from blessed import Terminal
+from constant import *
 
 
 
-def calculate_next_coordinates(key, snake, x, y, direction):
+def calculate_next_coordinates(key, snake, x, y, direction, win):
     """
     Calculate next coordinates, update snake, update direction if necessary
     Args:
@@ -28,6 +29,8 @@ def calculate_next_coordinates(key, snake, x, y, direction):
     snake.insert(0, (y, x))
     # check if we hit the border
     if y == 0 or y == 19 or x == 0 or x == 59:
+        last = snake.pop()
+        win.addch(last[0], last[1], ' ')
         # if so, update direction:
         if y == 0:
             y = 18
@@ -49,16 +52,18 @@ def calculate_next_coordinates(key, snake, x, y, direction):
         # update position
         snake.insert(0, (y, x))
 
-def game_over(score):
+def game_over(score, term):
     """
     Game over logic
     Args:
         score: score of the game
     """
+    # I need to clear the screen   with blessed
+    print(term.home + term.clear + term.move_y(term.height // 2))
     curses.endwin()
 
-    print("Game Over")
-    print(f"Final Score = {score}")
+    print(term.black_on_orangered(term.center('Game Over')))
+    print(term.black_on_darkkhaki(term.center(f'Final Score = {score}')))
 
 def main():
     """
@@ -70,6 +75,16 @@ def main():
     5. set up the game over logic
     6. control the score
     """
+    term = Terminal()
+    print(term.home + term.clear + term.move_y(term.height // 2))
+    print(term.black_on_darkkhaki(term.center('press any key to continue.')))
+    with term.cbreak(), term.hidden_cursor():
+        inp = term.inkey()
+    print(term.black_on_darkkhaki(term.center('press ESC to exit.')))
+    with term.cbreak(), term.hidden_cursor():
+        inp = term.inkey()
+        if inp.code == term.KEY_ESCAPE:
+            exit()
     curses.initscr()
     # y comes first, then x
     win = curses.newwin(20, 60, 0, 0)
@@ -87,7 +102,7 @@ def main():
     snake = [(4, 10), (4, 9), (4, 8)]
     food = (10, 20)
     # draw food
-    win.addch(food[0], food[1], '*')
+    win.addch(food[0], food[1], '#')
 
     ESC = 27
     key = curses.KEY_RIGHT
@@ -122,7 +137,7 @@ def main():
         y = snake[0][0]
         x = snake[0][1]
         
-        calculate_next_coordinates(key, snake, x, y, direction)
+        calculate_next_coordinates(key, snake, x, y, direction, win)
 
 
         # if snake runs over itself
@@ -153,15 +168,25 @@ def main():
                 food = (randint(1,18), randint(1,58))
                 if food in snake:
                     food = ()
-            win.addch(food[0], food[1], '*')
+            win.addch(food[0], food[1], '#')
         else:
             last = snake.pop()
             win.addch(last[0], last[1], ' ')
 
-        win.addch(snake[0][0], snake[0][1], '#')
+        win.addch(snake[0][0], snake[0][1], "*")
 
-
-    game_over(score)
+    print(term.home + term.clear, end='')
+    game_over(score, term)
 
 
 main()
+
+# term = Terminal()
+
+# print(term.home + term.clear + term.move_y(term.height // 2))
+# print(term.black_on_darkkhaki(term.center('press any key to continue.')))
+
+# with term.cbreak(), term.hidden_cursor():
+#     inp = term.inkey()
+
+# print(term.move_down(2) + 'You pressed ' + term.bold(repr(inp)))
