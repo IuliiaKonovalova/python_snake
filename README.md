@@ -8,3 +8,8 @@ Simple snake game with python.
 
 - Add check for collision with the snake's body if the user presses the opposite direction of the snake's current direction.
 - Add go through the wall feature.
+
+## snake_3.py
+
+- Add lives functionality.
+- Restructure the code.
