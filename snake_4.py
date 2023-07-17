@@ -1,9 +1,10 @@
 import curses
 from random import randint
+from blessed import Terminal
 
 
 
-def calculate_next_coordinates(key, snake, x, y, direction, win):
+def calculate_next_coordinates(key, snake, x, y, direction):
     """
     Calculate next coordinates, update snake, update direction if necessary
     Args:
@@ -27,8 +28,6 @@ def calculate_next_coordinates(key, snake, x, y, direction, win):
     snake.insert(0, (y, x))
     # check if we hit the border
     if y == 0 or y == 19 or x == 0 or x == 59:
-        last = snake.pop()
-        win.addch(last[0], last[1], ' ')
         # if so, update direction:
         if y == 0:
             y = 18
@@ -123,7 +122,7 @@ def main():
         y = snake[0][0]
         x = snake[0][1]
         
-        calculate_next_coordinates(key, snake, x, y, direction, win)
+        calculate_next_coordinates(key, snake, x, y, direction)
 
 
         # if snake runs over itself
@@ -158,6 +157,7 @@ def main():
         else:
             last = snake.pop()
             win.addch(last[0], last[1], ' ')
+
         win.addch(snake[0][0], snake[0][1], '#')
 
 
