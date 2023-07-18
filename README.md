@@ -14,3 +14,15 @@ Simple snake game with python.
 
 - Add lives functionality.
 - Restructure the code.
+
+## snake_4.py
+- Add blessed
+
+## snake_5.py
+- Restructure the code based on https://replit.com/talk/share/imagehttpsstoragegoogleapiscom/125833/576335
+- fix terminal
+- add fruits random appearance
+
+## snake_6.py
+- Code taken from https://replit.com/talk/share/snake-game-but-youre-the-food/126048
+- add fruits random appearance
