@@ -1,5 +1,7 @@
 import curses
 from random import randint
+from colorama import Fore, Back, Style
+from test import *
 
 
 curses.initscr()
@@ -41,7 +43,13 @@ while key != ESC:
     event = win.getch()
     key = event if event != -1 else prev_key
 
-    if key not in [curses.KEY_LEFT, curses.KEY_RIGHT, curses.KEY_UP, curses.KEY_DOWN, ESC]:
+    if key not in [
+        curses.KEY_LEFT,
+        curses.KEY_RIGHT,
+        curses.KEY_UP,
+        curses.KEY_DOWN,
+        ESC
+    ]:
         key = prev_key
 
     # calculate next coordinates
@@ -89,3 +97,8 @@ curses.endwin()
 
 print("Game Over")
 print(f"Final Score = {score}")
+print(Fore.RED + 'some red text')
+print(Back.GREEN + 'and with a green background')
+print(Style.DIM + 'and in dim text')
+print(Style.RESET_ALL)
+print('back to normal now')

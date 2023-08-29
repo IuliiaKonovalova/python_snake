@@ -1,6 +1,6 @@
-from blessed import Terminal
 import random
 import copy
+from blessed import Terminal
 from collections import deque
 from constant import *
 
