@@ -8,11 +8,11 @@ Simple snake game with Python.
 
 - Add "check" for collision with the snake's body if the user presses the opposite direction of the snake's current direction.
 - Add go through the wall feature.
-- Fix bug: when a snake hits the wall, the snake was adding a new segment to the body.
+- Fix bug: When a snake hits the wall, the snake adds a new segment to the body.
 
 ## snake_3.py
 
-- Add lives functionality.
+- Add "lives" functionality.
 - Restructure the code.
 
 ## snake_4.py
